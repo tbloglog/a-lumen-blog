@@ -22,15 +22,21 @@ $router->get('posts/{postId}', 'PostsController@Detail');
 
 $router->group(['middleware' => 'auth'], function () use ($router) {
 
-    //posts routes
-    $router->post("/posts", 'PostsController@Create');
-    $router->put("/posts/{postId}", 'PostsController@Update');
-    $router->delete("/posts/{postId}", 'PostsController@Delete');
+    $router->group(['prefix' => 'posts'], function () use ($router) {
+        
+        //posts routes
+        $router->post("", 'PostsController@Create');
+        $router->put("{postId}", 'PostsController@Update');
+        $router->delete("{postId}", 'PostsController@Delete');
 
-    //comments routes
-    $router->post("/posts/{postId}/comments",'CommentsController@Create');
-    $router->put("/posts/{postId}/comments/{commentId}",'CommentsController@Update');
-    $router->delete("/posts/{postId}/comments/{commentId}",'CommentsController@Delete');
+        $router->group(['prefix' => '{postId}/comments'], function () use ($router) {
+            //comments routes
+            $router->post("",'CommentsController@Create');
+            $router->put("{commentId}",'CommentsController@Update');
+            $router->delete("{commentId}",'CommentsController@Delete');
+        });
+        
+    });
 
 });
 

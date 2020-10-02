@@ -65,8 +65,8 @@ class PostsRepository implements IPostsRepository{
 
     function GetAll() : array{
 
-        $posts = Post::all();
-    
+        $posts = Post::with(['comments','user'])->get();
+
         $final = array();
         
         foreach($posts as $post){
@@ -89,7 +89,7 @@ class PostsRepository implements IPostsRepository{
 
     public function Get(int $id) : object{
 
-        $post = Post::where('id', $id)->first();
+        $post = Post::with(['comments','user'])->where('id', $id)->first();
 
         $postDTO = new PostDto();
             
