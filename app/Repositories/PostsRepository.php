@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\IPostsRepository;
 use App\Models\Post;
+use App\Models\Comment;
 use App\DTOs\PostDto;
 use App\DTOs\CommentDto;
 
@@ -44,6 +45,22 @@ class PostsRepository implements IPostsRepository{
 
     }
 
+    public function Delete(int $post_id, int $user_id) : bool{
+
+        $post = Post::where("id",$post_id)->where("user_id",$user_id)->first();
+
+        if($post != null){
+
+            //elimino tutti i commenti associati
+            Comment::where('post_id', $post->id)->delete();
+
+            $post->delete();
+
+            return true;
+        }
+
+        return false;
+    }
 
     function GetAll() : array{
 

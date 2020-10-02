@@ -12,4 +12,6 @@ interface IPostsRepository{
 
     public function Update(int $post_id, string $title, string $content, int $user_id) : bool;
 
+    public function Delete(int $post_id, int $user_id) : bool;
+
 }

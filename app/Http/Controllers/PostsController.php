@@ -50,6 +50,15 @@ class PostsController extends Controller
         return response()->json(["error"=>1,'message'=>'non puoi modificare questo articolo']);
     }
 
+    public function Delete(Request $request, int $postId){
+
+        if($this->postsRepository->Delete($postId,$request->user()->id)){
+            return response()->json(["success"=>1]);
+        }
+
+        return response()->json(["error"=>1,'message'=>'non puoi eliminare questo articolo']);
+    }
+
     public function List(){
 
         $allPosts = $this->postsRepository->GetAll();

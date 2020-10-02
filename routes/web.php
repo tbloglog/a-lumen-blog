@@ -28,3 +28,8 @@ $router->put("/posts/{postId}", [
     'middleware' => 'auth',
     'uses' => 'PostsController@Update'
 ]);
+
+$router->delete("/posts/{postId}", [
+    'middleware' => 'auth',
+    'uses' => 'PostsController@Delete'
+]);
