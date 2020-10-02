@@ -35,5 +35,14 @@ class AuthServiceProvider extends ServiceProvider
                 return User::where('api_token', $request->header('token'))->first();
             }
         });
+
+        Gate::define('update-comment', function ($user) {
+            return $user->subscription === 'premium';
+        });
+
+        Gate::define('delete-comment', function ($user) {
+            return $user->subscription === 'premium';
+        });
+
     }
 }
