@@ -15,13 +15,41 @@ class PostsController extends Controller
      */
 
     private $postsRepository;
+    private $messages;
 
     public function __construct(IPostsRepository $PostsRepository)
     {
         $this->postsRepository = $PostsRepository;
+        $this->messages = ['required' => 'Il :attribute è obbligatorio'];
     }
 
+    public function Create(Request $request){
+
+        $rules = [
+            'title' => 'required',
+            'content' => 'required'
+        ];
+
+        $this->validate($request, $rules, $this->messages);
+
+        $this->postsRepository->Create(
+            $request->title, 
+            $request->content,
+            $request->user()->id
+        );
+
+        return response()->json(["success"=>1]);
+    }
     
+    public function Update(Request $request, int $postId){
+
+        if($this->postsRepository->Update($postId,$request->title ?? "",$request->content ?? "",$request->user()->id)){
+            return response()->json(["success"=>1]);
+        }
+
+        return response()->json(["error"=>1,'message'=>'non puoi modificare questo articolo']);
+    }
+
     public function List(){
 
         $allPosts = $this->postsRepository->GetAll();

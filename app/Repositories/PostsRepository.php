@@ -9,6 +9,42 @@ use App\DTOs\CommentDto;
 
 class PostsRepository implements IPostsRepository{
 
+    public function Create(string $title, string $content, int $user_id) : void{
+
+        $post = new Post;
+
+        $post->title = $title;
+        $post->content = $content;
+        $post->user_id = $user_id;
+
+        $post->save();
+
+    }
+
+    public function Update(int $post_id, string $title, string $content, int $user_id) : bool{
+
+        $post = Post::where("id",$post_id)->where("user_id",$user_id)->first();
+
+        if($post != null){
+
+            if(!$this->IsNullOrEmptyString($title)){
+                $post->title = $title;
+            }
+            if(!$this->IsNullOrEmptyString($content)){
+                $post->content = $content;
+            }
+
+            $post->save();
+
+            return true;
+
+        }
+
+        return false;
+
+    }
+
+
     function GetAll() : array{
 
         $posts = Post::all();
@@ -58,6 +94,10 @@ class PostsRepository implements IPostsRepository{
         return $postDTO;
 
 
+    }
+
+    private function IsNullOrEmptyString($str){
+        return (!isset($str) || trim($str) === '');
     }
 
 }
