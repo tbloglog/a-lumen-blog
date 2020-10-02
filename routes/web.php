@@ -20,16 +20,14 @@ $router->get('/', function () use ($router) {
 $router->get('posts', 'PostsController@List');
 $router->get('posts/{postId}', 'PostsController@Detail');
 
-$router->post("/posts", [
-    'middleware' => 'auth',
-    'uses' => 'PostsController@Create'
-]);
-$router->put("/posts/{postId}", [
-    'middleware' => 'auth',
-    'uses' => 'PostsController@Update'
-]);
+$router->group(['middleware' => 'auth'], function () use ($router) {
 
-$router->delete("/posts/{postId}", [
-    'middleware' => 'auth',
-    'uses' => 'PostsController@Delete'
-]);
+    //posts routes
+    $router->post("/posts", 'PostsController@Create');
+    $router->put("/posts/{postId}", 'PostsController@Update');
+    $router->delete("/posts/{postId}", 'PostsController@Delete');
+
+    //comments routes
+    $router->post("/posts/{postId}/comments",'CommentsController@Create');
+
+});

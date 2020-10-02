@@ -14,5 +14,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('App\Interfaces\IPostsRepository', 'App\Repositories\PostsRepository');
+        $this->app->bind('App\Interfaces\ICommentsRepository', 'App\Repositories\CommentsRepository');
     }
 }
