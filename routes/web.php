@@ -29,7 +29,6 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
 
     //comments routes
     $router->post("/posts/{postId}/comments",'CommentsController@Create');
-
     $router->put("/posts/{postId}/comments/{commentId}",'CommentsController@Update');
     $router->delete("/posts/{postId}/comments/{commentId}",'CommentsController@Delete');
 

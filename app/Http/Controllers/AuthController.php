@@ -33,7 +33,7 @@ class AuthController extends Controller
             }
         }
 
-        return response()->json(["error"=>1,"username o password errati"],403);
+        return response()->json(["error"=>1,"message"=>"username o password errati"],403);
 
     }
 }
