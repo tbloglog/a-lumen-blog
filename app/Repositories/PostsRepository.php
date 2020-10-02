@@ -105,6 +105,7 @@ class PostsRepository implements IPostsRepository{
         foreach($allComments as $comment){
             $tmpCommentDTO = new CommentDto();
 
+            $tmpCommentDTO->id = $comment->id;
             $tmpCommentDTO->comment = $comment->content;
             $tmpCommentDTO->author = $comment->user->name;
 
