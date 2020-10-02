@@ -6,6 +6,7 @@ use App\Interfaces\IPostsRepository;
 use App\Models\Post;
 use App\Models\Comment;
 use App\DTOs\PostDto;
+use App\DTOs\PostListingDto;
 use App\DTOs\CommentDto;
 
 class PostsRepository implements IPostsRepository{
@@ -70,8 +71,9 @@ class PostsRepository implements IPostsRepository{
         
         foreach($posts as $post){
 
-            $tmpDTO = new PostDto();
+            $tmpDTO = new PostListingDto();
             
+            $tmpDTO->id = $post->id;
             $tmpDTO->title = $post->title;
             $tmpDTO->content = $post->content;
             $tmpDTO->author = $post->user->name;
@@ -87,10 +89,11 @@ class PostsRepository implements IPostsRepository{
 
     public function Get(int $id) : object{
 
-        $post = Post::firstWhere('id', $id);
+        $post = Post::where('id', $id)->first();
 
         $postDTO = new PostDto();
             
+        $postDTO->id = $post->id;
         $postDTO->title = $post->title;
         $postDTO->content = $post->content;
         $postDTO->author = $post->user->name;
@@ -98,6 +101,7 @@ class PostsRepository implements IPostsRepository{
         
         $allComments = $post->comments;
 
+        $postDTO->comments = [];
         foreach($allComments as $comment){
             $tmpCommentDTO = new CommentDto();
 

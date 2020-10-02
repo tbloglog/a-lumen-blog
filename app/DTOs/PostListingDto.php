@@ -2,7 +2,7 @@
 
 namespace App\Dtos;
 
-class PostDto{
+class PostListingDto{
 
     public $id;
     
@@ -13,7 +13,5 @@ class PostDto{
     public $author;
 
     public $comments_count;
-
-    public $comments;
 
 }

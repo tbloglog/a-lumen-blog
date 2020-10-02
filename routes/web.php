@@ -34,3 +34,5 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->delete("/posts/{postId}/comments/{commentId}",'CommentsController@Delete');
 
 });
+
+$router->post("/auth",'AuthController@Login');
