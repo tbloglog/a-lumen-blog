@@ -25,19 +25,19 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->group(['prefix' => 'posts'], function () use ($router) {
         
         //posts routes
-        $router->post("", 'PostsController@Create');
-        $router->put("{postId}", 'PostsController@Update');
-        $router->delete("{postId}", 'PostsController@Delete');
+        $router->post('', 'PostsController@Create');
+        $router->put('{postId}', 'PostsController@Update');
+        $router->delete('{postId}', 'PostsController@Delete');
 
         $router->group(['prefix' => '{postId}/comments'], function () use ($router) {
             //comments routes
-            $router->post("",'CommentsController@Create');
-            $router->put("{commentId}",'CommentsController@Update');
-            $router->delete("{commentId}",'CommentsController@Delete');
+            $router->post('','CommentsController@Create');
+            $router->put('{commentId}','CommentsController@Update');
+            $router->delete('{commentId}','CommentsController@Delete');
         });
         
     });
 
 });
 
-$router->post("/auth",'AuthController@Login');
+$router->post('/auth','AuthController@Login');

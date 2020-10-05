@@ -29,11 +29,11 @@ class AuthController extends Controller
 
         if($user != null){
             if (Hash::check($request->password,  $user->password)) {
-                return response()->json(["token"=>$user->api_token]);
+                return response()->json(['token'=>$user->api_token]);
             }
         }
 
-        return response()->json(["error"=>1,"message"=>"username o password errati"],403);
+        return response()->json(['error'=>1,'message'=>'username o password errati'],403);
 
     }
 }

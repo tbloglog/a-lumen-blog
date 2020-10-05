@@ -22,6 +22,7 @@ class PostFactory extends Factory
      *
      * @return array
      */
+    //TODO: faker sentence e content per title e content
     public function definition()
     {
         return [

@@ -11,6 +11,7 @@ use App\DTOs\CommentDto;
 
 class PostsRepository implements IPostsRepository{
 
+
     public function Create(string $title, string $content, int $user_id) : int{
 
         $post = new Post;
@@ -27,7 +28,7 @@ class PostsRepository implements IPostsRepository{
 
     public function Update(int $post_id, string $title, string $content, int $user_id) : bool{
 
-        $post = Post::where("id",$post_id)->where("user_id",$user_id)->first();
+        $post = Post::where('id',$post_id)->where('user_id',$user_id)->first();
 
         if($post != null){
 
@@ -50,7 +51,7 @@ class PostsRepository implements IPostsRepository{
 
     public function Delete(int $post_id, int $user_id) : bool{
 
-        $post = Post::where("id",$post_id)->where("user_id",$user_id)->first();
+        $post = Post::where('id',$post_id)->where('user_id',$user_id)->first();
 
         if($post != null){
 
@@ -65,6 +66,7 @@ class PostsRepository implements IPostsRepository{
         return false;
     }
 
+    //TODO: per utente => id, nome, email, picture
     function GetAll() : array{
 
         $posts = Post::with(['comments','user'])->get();
@@ -89,6 +91,7 @@ class PostsRepository implements IPostsRepository{
 
     }
 
+    //TODO: per utente => id, nome, email, picture
     public function Get(int $id) : object{
 
         $post = Post::with(['comments','user'])->where('id', $id)->first();

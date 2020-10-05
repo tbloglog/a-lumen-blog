@@ -37,20 +37,20 @@ class CommentsController extends Controller
             $request->user()->id
         );
 
-        return response()->json(["success"=>1,"id"=>$newId]);
+        return response()->json(['success'=>1,'id'=>$newId]);
     }
     
     public function Update(Request $request, int $postId, int $commentId){
 
         if ($request->user()->can('update-comment', $request->user())) {
-            if($this->commentsRepository->Update($commentId, $request->content ?? "", $postId, $request->user()->id)){
-                return response()->json(["success"=>1]);
+            if($this->commentsRepository->Update($commentId, $request->content ?? '', $postId, $request->user()->id)){
+                return response()->json(['success'=>1]);
             }
 
-            return response()->json(["error"=>1,"message"=>"non puoi modificare questo commento"]);
+            return response()->json(['error'=>1,'message'=>'non puoi modificare questo commento']);
         }
 
-        return response()->json(["error"=>1,"message"=>"non hai i permessi di modificare i commenti"],403);
+        return response()->json(['error'=>1,'message'=>'non hai i permessi di modificare i commenti'],403);
 
     }
 
@@ -58,13 +58,13 @@ class CommentsController extends Controller
 
         if ($request->user()->can('delete-comment', $request->user())) {
             if($this->commentsRepository->Delete($commentId, $request->user()->id)){
-                return response()->json(["success"=>1]);
+                return response()->json(['success'=>1]);
             }
 
-            return response()->json(["error"=>1,"message"=>"non puoi eliminare questo commento"]);
+            return response()->json(['error'=>1,'message'=>'non puoi eliminare questo commento']);
         }
 
-        return response()->json(["error"=>1,"message"=>"non hai i permessi di eliminare i commenti"],403);
+        return response()->json(['error'=>1,'message'=>'non hai i permessi di eliminare i commenti'],403);
 
     }
 
