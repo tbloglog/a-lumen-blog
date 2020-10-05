@@ -7,7 +7,7 @@ use App\Models\Comment;
 
 class CommentsRepository implements ICommentsRepository{
 
-    public function Create(string $content, int $post_id, int $user_id) : void{
+    public function Create(string $content, int $post_id, int $user_id) : int{
 
         $comment = new Comment;
 
@@ -16,6 +16,8 @@ class CommentsRepository implements ICommentsRepository{
         $comment->user_id = $user_id;
 
         $comment->save();
+
+        return $comment->id;
 
     }
 

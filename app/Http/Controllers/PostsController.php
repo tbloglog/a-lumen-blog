@@ -32,13 +32,13 @@ class PostsController extends Controller
 
         $this->validate($request, $rules, $this->messages);
 
-        $this->postsRepository->Create(
+        $newId = $this->postsRepository->Create(
             $request->title, 
             $request->content,
             $request->user()->id
         );
 
-        return response()->json(["success"=>1]);
+        return response()->json(["success"=>1,"id"=>$newId]);
     }
     
     public function Update(Request $request, int $postId){

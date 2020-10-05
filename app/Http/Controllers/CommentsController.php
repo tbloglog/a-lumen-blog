@@ -31,13 +31,13 @@ class CommentsController extends Controller
 
         $this->validate($request, $rules, $this->messages);
 
-        $this->commentsRepository->Create(
+        $newId = $this->commentsRepository->Create(
             $request->content, 
             $postId,
             $request->user()->id
         );
 
-        return response()->json(["success"=>1]);
+        return response()->json(["success"=>1,"id"=>$newId]);
     }
     
     public function Update(Request $request, int $postId, int $commentId){

@@ -11,7 +11,7 @@ use App\DTOs\CommentDto;
 
 class PostsRepository implements IPostsRepository{
 
-    public function Create(string $title, string $content, int $user_id) : void{
+    public function Create(string $title, string $content, int $user_id) : int{
 
         $post = new Post;
 
@@ -20,6 +20,8 @@ class PostsRepository implements IPostsRepository{
         $post->user_id = $user_id;
 
         $post->save();
+
+        return $post->id;
 
     }
 
