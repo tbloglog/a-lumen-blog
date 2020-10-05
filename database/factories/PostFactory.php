@@ -21,13 +21,12 @@ class PostFactory extends Factory
      * Define the model's default state.
      *
      * @return array
-     */
-    //TODO: faker sentence e content per title e content
+     */    
     public function definition()
     {
         return [
-            'title' => $this->faker->title,
-            'content' => $this->faker->sentence,
+            'title' => $this->faker->sentence,
+            'content' => $this->faker->text,
         ];
     }
 }
