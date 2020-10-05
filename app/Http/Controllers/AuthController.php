@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class AuthController extends Controller
 {
@@ -33,7 +34,7 @@ class AuthController extends Controller
             }
         }
 
-        return response()->json(['error'=>1,'message'=>'username o password errati'],403);
+        throw new UnauthorizedHttpException('','Unauthorized | Username o passwor errati');
 
     }
 }
