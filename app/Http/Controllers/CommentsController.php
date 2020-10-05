@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Interfaces\ICommentsRepository;
 use Illuminate\Http\Request;
-
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class CommentsController extends Controller
 {
@@ -37,34 +38,36 @@ class CommentsController extends Controller
             $request->user()->id
         );
 
-        return response()->json(['success'=>1,'id'=>$newId]);
+        return response()->json($this->commentsRepository->Get($newId));
     }
     
     public function Update(Request $request, int $postId, int $commentId){
 
         if ($request->user()->can('update-comment', $request->user())) {
+            
             if($this->commentsRepository->Update($commentId, $request->content ?? '', $postId, $request->user()->id)){
-                return response()->json(['success'=>1]);
+                return response()->json($this->commentsRepository->Get($commentId));
             }
 
-            return response()->json(['error'=>1,'message'=>'non puoi modificare questo commento']);
+            throw new NotFoundHttpException();
         }
 
-        return response()->json(['error'=>1,'message'=>'non hai i permessi di modificare i commenti'],403);
+        throw new UnauthorizedHttpException('','Unauthorized | Non puoi modificare questo commento');
 
     }
 
     public function Delete(Request $request, int $postId, int $commentId){
 
         if ($request->user()->can('delete-comment', $request->user())) {
+            
             if($this->commentsRepository->Delete($commentId, $request->user()->id)){
-                return response()->json(['success'=>1]);
+                return response()->json([]);
             }
 
-            return response()->json(['error'=>1,'message'=>'non puoi eliminare questo commento']);
+            throw new NotFoundHttpException();
         }
 
-        return response()->json(['error'=>1,'message'=>'non hai i permessi di eliminare i commenti'],403);
+        throw new UnauthorizedHttpException('','Unauthorized | Non puoi eliminare questo commento');
 
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Dtos\CommentDto;
 use App\Interfaces\ICommentsRepository;
 use App\Models\Comment;
 
@@ -53,6 +54,14 @@ class CommentsRepository implements ICommentsRepository{
         }
 
         return false;
+
+    }
+
+    public function Get(int $comment_id) : object{
+
+        $comment = Comment::where('id',$comment_id)->first();
+
+        return new CommentDto($comment);
 
     }
 

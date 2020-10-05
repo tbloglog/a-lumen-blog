@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Interfaces\IPostsRepository;
 use Illuminate\Http\Request;
-
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class PostsController extends Controller
 {
@@ -38,25 +39,25 @@ class PostsController extends Controller
             $request->user()->id
         );
 
-        return response()->json(['success'=>1,'id'=>$newId]);
+        return response()->json($this->postsRepository->Get($newId));
     }
     
     public function Update(Request $request, int $postId){
 
         if($this->postsRepository->Update($postId,$request->title ?? '',$request->content ?? '',$request->user()->id)){
-            return response()->json(['success'=>1]);
+            return response()->json($this->postsRepository->Get($postId));
         }
 
-        return response()->json(['error'=>1,'message'=>'non puoi modificare questo articolo']);
+        throw new NotFoundHttpException();
     }
 
     public function Delete(Request $request, int $postId){
 
         if($this->postsRepository->Delete($postId,$request->user()->id)){
-            return response()->json(['success'=>1]);
+            return response()->json([]);
         }
 
-        return response()->json(['error'=>1,'message'=>'non puoi eliminare questo articolo']);
+        throw new NotFoundHttpException();
     }
 
     public function List(){

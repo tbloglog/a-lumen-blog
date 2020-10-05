@@ -66,7 +66,10 @@ class Handler extends ExceptionHandler
 
             case ConflictHttpException::class:
                 return response()->json(['title'=>['conflict exception']],409);
-                
+            
+            case UnauthorizedHttpException::class:
+                return response()->json(['title'=>[$e->getMessage()]],401);
+
             default:
                 return parent::render($request, $e);
         }

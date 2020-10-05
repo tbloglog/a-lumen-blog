@@ -10,4 +10,6 @@ interface ICommentsRepository{
 
     public function Delete(int $comment_id, int $user_id) : bool;
 
+    public function Get(int $comment_id) : object;
+
 }
