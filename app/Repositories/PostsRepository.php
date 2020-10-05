@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\DTOs\PostDto;
 use App\DTOs\PostListingDto;
 use App\DTOs\CommentDto;
+use App\DTOs\UserDto;
 
 class PostsRepository implements IPostsRepository{
 
@@ -66,7 +67,6 @@ class PostsRepository implements IPostsRepository{
         return false;
     }
 
-    //TODO: per utente => id, nome, email, picture
     function GetAll() : array{
 
         $posts = Post::with(['comments','user'])->get();
@@ -75,15 +75,7 @@ class PostsRepository implements IPostsRepository{
         
         foreach($posts as $post){
 
-            $tmpDTO = new PostListingDto();
-            
-            $tmpDTO->id = $post->id;
-            $tmpDTO->title = $post->title;
-            $tmpDTO->content = $post->content;
-            $tmpDTO->author = $post->user->name;
-            $tmpDTO->comments_count = $post->comments->count();
-            
-            array_push($final, $tmpDTO);
+            array_push($final, new PostListingDto($post->first()));
 
         }
 
@@ -91,33 +83,13 @@ class PostsRepository implements IPostsRepository{
 
     }
 
-    //TODO: per utente => id, nome, email, picture
+    
     public function Get(int $id) : object{
 
         $post = Post::with(['comments','user'])->where('id', $id)->first();
 
-        $postDTO = new PostDto();
-            
-        $postDTO->id = $post->id;
-        $postDTO->title = $post->title;
-        $postDTO->content = $post->content;
-        $postDTO->author = $post->user->name;
-        $postDTO->comments_count = $post->comments->count();
-        
-        $allComments = $post->comments;
-
-        $postDTO->comments = [];
-        foreach($allComments as $comment){
-            $tmpCommentDTO = new CommentDto();
-
-            $tmpCommentDTO->id = $comment->id;
-            $tmpCommentDTO->comment = $comment->content;
-            $tmpCommentDTO->author = $comment->user->name;
-
-            array_push($postDTO->comments,$tmpCommentDTO);
-
-        }
-        
+        $postDTO = new PostDto($post);
+          
         return $postDTO;
 
 
