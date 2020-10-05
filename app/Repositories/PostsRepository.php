@@ -7,8 +7,6 @@ use App\Models\Post;
 use App\Models\Comment;
 use App\DTOs\PostDto;
 use App\DTOs\PostListingDto;
-use App\DTOs\CommentDto;
-use App\DTOs\UserDto;
 
 class PostsRepository implements IPostsRepository{
 
