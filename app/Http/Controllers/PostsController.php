@@ -69,9 +69,13 @@ class PostsController extends Controller
 
     public function Detail(Request $request, int $postId){
 
-        $postDetail = $this->postsRepository->Get($postId);
-
-        return response()->json($postDetail);
+       
+        if($this->postsRepository->Exists($postId)){
+            $postDetail = $this->postsRepository->Get($postId);
+            return response()->json($postDetail);
+        }
+        
+        throw new NotFoundHttpException();
 
     }
 

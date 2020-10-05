@@ -14,4 +14,6 @@ interface IPostsRepository{
 
     public function Delete(int $post_id, int $user_id) : bool;
 
+    public function Exists(int $post_id) : bool;
+
 }

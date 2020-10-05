@@ -93,6 +93,10 @@ class PostsRepository implements IPostsRepository{
 
     }
 
+    public function Exists(int $post_id) : bool{
+        return Post::where('id',$post_id)->first() != null;
+    }
+
     private function IsNullOrEmptyString($str){
         return (!isset($str) || trim($str) === '');
     }
